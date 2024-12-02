@@ -18,11 +18,11 @@ public class HikingPlanner {
     @GeneratedValue
 
     private long id;
-    private long template_id; //
-    private java.util.Date start_date; //
+    private long template_id;
+    private java.util.Date start_date;
     private java.util.Date end_date;
-    private double duration; // kui on aega, siis teeme java.util.concurrent.TimeUnitiga
+    private double duration; //If we have extra time, lets make a calculator with start and end time
     private String notes;
-    private String meetUpPoint;
+    private String meetup_point;
     private boolean is_completed;
 }
