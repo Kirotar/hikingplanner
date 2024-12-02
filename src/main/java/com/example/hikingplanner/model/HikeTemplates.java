@@ -1,9 +1,6 @@
 package com.example.hikingplanner.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 @NoArgsConstructor
@@ -15,9 +12,9 @@ import lombok.*;
 @Table(name = "hike_templates")
 public class HikeTemplates {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private long id;
     private String name;
     private double distance_km;
     private String location;
