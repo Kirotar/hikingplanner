@@ -25,13 +25,13 @@ public class Hike {
     private HikeTemplates template;//This setup allows the database to associate a hike (in the Hikes table)
     // with its corresponding template (in the HikeTemplates table) through a foreign key.
 
-    private LocalDate start_date;
-    private LocalDate end_date;
+    private LocalDate startDate;
+    private LocalDate endDate;
     //We should add start time as well for Planned hikes
-    private double duration; //If we have extra time, lets make a calculator with start and end time
+    private String duration; //If we have extra time, lets make a calculator with start and end time
 
     @Column(length = 500) // Limit the length of notes in the database
     private String notes;
-    private String meetup_point;
-    private boolean is_completed;
+    private String meetupPoint;
+    private boolean isCompleted;
 }

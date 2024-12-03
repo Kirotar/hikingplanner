@@ -16,7 +16,7 @@ public class HikeTemplates {
     private Long id;
 
     private String name;
-    private double distance_km;
+    private double distanceKm;
     private String location;
-    private String details_url;
+    private String detailsUrl;
 }
