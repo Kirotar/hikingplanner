@@ -48,6 +48,4 @@ public class PlannedHikeController {
         return ResponseEntity.noContent().build(); // HTTP 204 No Content
     }
 
-    //Vaja teha kaasa võetavate asjade nimekiri
-
 }
