@@ -1,9 +1,6 @@
 package com.example.hikingplanner.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 @NoArgsConstructor
@@ -19,7 +16,8 @@ public class HikeTemplates {
 
     private long id;
     private String name;
-    private double distance_km;
+    private String distanceKm; //If we have extra time, lets make a calculator with start and end time
     private String location;
-    private String details_url;
+    private String detailsUrl;
+
 }

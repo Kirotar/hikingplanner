@@ -1,9 +1,6 @@
 package com.example.hikingplanner.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 @NoArgsConstructor
@@ -17,13 +14,15 @@ public class Achievements {
     @Id
     @GeneratedValue
 
-    private long id;
-    private int hike_id;
-    private int type_of_hike_id;
-    private int landmarks_id;
-    private int activities_id;
-    private int wildlife_sightings_id;
-    private int activities_number_of_times_id;
-    private int number_of_times_id;
-    private boolean is_completed;
+    private Long id;
+
+    private Integer hikeId;  // Foreign key to hikes table
+    private Integer typeOfHikeId;  // Foreign key to type_of_hike table
+    private Integer landmarksId;  // Foreign key to landmarks table
+    private Integer activitiesId;  // Foreign key to activities table
+    private Integer wildlifeSightingsId;  // Foreign key to wildlife sightings table
+    private Integer activitiesNumberOfTimesId;  // Foreign key to activities_number_of_times table
+    private Boolean completed = false;  // Indicates if the activity was completed
+    private Integer numberOfTimes;  // Number of times an activity was completed
+
 }
