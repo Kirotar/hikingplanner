@@ -57,7 +57,7 @@ public class ChecklistService {
     public List<UserChecklist> getChecklistForHike(Long hikeId) {
         return userChecklistRepository.findByHikeId(hikeId);
     }
-//Mark items in user chosed checklist as done
+//Mark items in user chosen checklist as done
     public ResponseEntity<UserChecklist> markItemAsCompleted(Long hikeId, Long itemId) {
         Optional<UserChecklist> optionalEntry = userChecklistRepository.findByHikeIdAndChecklistItemId(hikeId, itemId);
         /*Optional: container object that may or may not contain a non-null value. Optional is used to avoid
