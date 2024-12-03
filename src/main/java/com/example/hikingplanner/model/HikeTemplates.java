@@ -12,12 +12,10 @@ import lombok.*;
 @Table(name = "hike_templates")
 public class HikeTemplates {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private long id;
     private String name;
-    private String distanceKm; //If we have extra time, lets make a calculator with start and end time
-    private String location;
+    private String distanceKm; //If we have extra time, lets make a calculator with start and end time    private String location;
     private String detailsUrl;
-
 }
