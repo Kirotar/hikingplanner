@@ -6,16 +6,19 @@ import com.example.hikingplanner.model.UserChecklist;
 import com.example.hikingplanner.repository.ChecklistItemRepository;
 import com.example.hikingplanner.repository.HikeRepository;
 import com.example.hikingplanner.repository.UserChecklistRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+@Service
+@Transactional
 public class ChecklistService {
 
     private final ChecklistItemRepository checklistItemRepository;
@@ -32,6 +35,7 @@ public class ChecklistService {
     public List<ChecklistItem> getChecklistItems() {
         return checklistItemRepository.findAll();
     }
+
 //User selects the items they want for their hike
     public ResponseEntity<List<UserChecklist>> addItemsToChecklist(Long hikeId, List<Long> itemIds) {
         List<UserChecklist> userChecklist = new ArrayList<>();
@@ -57,6 +61,7 @@ public class ChecklistService {
     public List<UserChecklist> getChecklistForHike(Long hikeId) {
         return userChecklistRepository.findByHikeId(hikeId);
     }
+
 //Mark items in user chosen checklist as done
     public ResponseEntity<UserChecklist> markItemAsCompleted(Long hikeId, Long itemId) {
         Optional<UserChecklist> optionalEntry = userChecklistRepository.findByHikeIdAndChecklistItemId(hikeId, itemId);

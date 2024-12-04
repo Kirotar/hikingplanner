@@ -1,5 +1,6 @@
 package com.example.hikingplanner.controller;
 
+import com.example.hikingplanner.dto.HikeDTO;
 import com.example.hikingplanner.model.HikeTemplates;
 import com.example.hikingplanner.model.Hike;
 import com.example.hikingplanner.service.PlannedHikeService;
@@ -38,8 +39,8 @@ public class PlannedHikeController {
     }
 
     @PostMapping("/plan-hike")
-    public Hike planHike(@RequestBody Hike hike){
-        return plannedHikeService.planHike(hike);
+    public Hike planHike(@RequestBody HikeDTO hikedto){
+        return plannedHikeService.planHike(hikedto);
     }
 
     @PutMapping("/{id}/complete")

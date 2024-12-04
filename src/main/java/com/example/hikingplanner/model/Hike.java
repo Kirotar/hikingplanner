@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -28,10 +29,14 @@ public class Hike {
     private LocalDate startDate;
     private LocalDate endDate;
     //We should add start time as well for Planned hikes
-    private String duration; //If we have extra time, lets make a calculator with start and end time
+    private LocalTime duration; //If we have extra time, lets make a calculator with start and end time
 
     @Column(length = 500) // Limit the length of notes in the database
     private String notes;
     private String meetupPoint;
     private boolean isCompleted;
+
+    public void setCompleted(boolean isCompleted) {
+        this.isCompleted = isCompleted;
+    }
 }
