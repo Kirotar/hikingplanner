@@ -8,8 +8,9 @@ import com.example.hikingplanner.repository.HikeTemplatesRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
-
+import java.util.stream.Collectors;
 @Service
 @Transactional
 public class PlannedHikeService {
@@ -44,9 +45,28 @@ public class PlannedHikeService {
         // Save the mapped entity
         return hikeRepository.save(hike);
     }
-//Get all the user inserted hikes
-    public List<Hike> getAllUserHikes() {
-        return hikeRepository.findAll();
+//Get all the user inserted past hikes
+    public List<Hike> getAllUserPastHikes() {
+        // Get all hikes (you can replace this with the actual data fetching logic, e.g., from a repository)
+        List<Hike> hikes = hikeRepository.findAll();
+
+        // Filter hikes by startDate being in the past or today
+        LocalDate currentDate = LocalDate.now();
+        return hikes.stream()
+                .filter(hike -> hike.getStartDate().isBefore(currentDate))
+                .collect(Collectors.toList());
+    }
+
+    //Get all the user inserted future hikes
+    public List<Hike> getAllUserFutureHikes() {
+        // Get all hikes (you can replace this with the actual data fetching logic, e.g., from a repository)
+        List<Hike> hikes = hikeRepository.findAll();
+
+        // Filter hikes by startDate being in the past or today
+        LocalDate currentDate = LocalDate.now();
+        return hikes.stream()
+                .filter(hike -> hike.getStartDate().isAfter(currentDate) || hike.getStartDate().isEqual(currentDate))
+                .collect(Collectors.toList());
     }
 //Update a user hike from uncompleted to completed
 

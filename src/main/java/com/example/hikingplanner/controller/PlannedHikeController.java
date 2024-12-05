@@ -23,9 +23,14 @@ public class PlannedHikeController {
         return plannedHikeService.getAllHikeTemplates();
     }
 
-    @GetMapping("/get-hikes")
-    public List <Hike> getAllUserHikes(){
-        return plannedHikeService.getAllUserHikes();
+    @GetMapping("/get-past-hikes")
+    public List <Hike> getAllUserPastHikes(){
+                return plannedHikeService.getAllUserPastHikes();
+    }
+
+    @GetMapping("/get-future-hikes")
+    public List <Hike> getAllUserFutureHikes(){
+        return plannedHikeService.getAllUserFutureHikes();
     }
 
     @GetMapping("/get-trail/{name}")

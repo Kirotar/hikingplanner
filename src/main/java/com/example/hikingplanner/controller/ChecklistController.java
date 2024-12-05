@@ -25,7 +25,7 @@ public class ChecklistController {
         return checklistService.getChecklistItems();
     }
     //Endpoint to allow users to select items for a specific hike
-    @PostMapping("/hike/{hikeId}/checklist")
+    @PostMapping("/hike/{hikeId}/add-checklist")
     public ResponseEntity<List<UserChecklist>> addItemsToChecklist(@PathVariable Long hikeId, @RequestBody List<Long> itemIds) {
   return checklistService.addItemsToChecklist(hikeId, itemIds);
     }
