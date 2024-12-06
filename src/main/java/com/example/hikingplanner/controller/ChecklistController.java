@@ -4,6 +4,7 @@ import com.example.hikingplanner.model.ChecklistItem;
 import com.example.hikingplanner.model.UserChecklist;
 import com.example.hikingplanner.repository.ChecklistItemRepository;
 import com.example.hikingplanner.service.ChecklistService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +26,7 @@ public class ChecklistController {
         return checklistService.getChecklistItems();
     }
     //Endpoint to allow users to select items for a specific hike
-    @PostMapping("/hike/{hikeId}/add-checklist")
+    @PostMapping("/hike/{hikeId}/add-checklist") // vastutab kasutaja poolt valitud checklisti salvestamise eest
     public ResponseEntity<List<UserChecklist>> addItemsToChecklist(@PathVariable Long hikeId, @RequestBody List<Long> itemIds) {
   return checklistService.addItemsToChecklist(hikeId, itemIds);
     }
@@ -39,5 +40,11 @@ public class ChecklistController {
     @PutMapping("/hike/{hikeId}/checklist/{itemId}")
     public ResponseEntity<UserChecklist> markItemAsCompleted(@PathVariable Long hikeId, @PathVariable Long itemId) {
   return checklistService.markItemAsCompleted(hikeId, itemId);
+    }
+
+    @DeleteMapping("/delete-items/{id}")
+    public ResponseEntity<Void> deleteItem(@PathVariable Long id) {
+        checklistService.deleteItem(id);
+        return ResponseEntity.noContent().build(); // HTTP 204 No Content
     }
 }

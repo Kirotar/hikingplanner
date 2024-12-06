@@ -6,6 +6,7 @@ import com.example.hikingplanner.model.UserChecklist;
 import com.example.hikingplanner.repository.ChecklistItemRepository;
 import com.example.hikingplanner.repository.HikeRepository;
 import com.example.hikingplanner.repository.UserChecklistRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -88,6 +89,13 @@ public class ChecklistService {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }*/
+    }
+
+    public void deleteItem(Long id) {
+        if (!userChecklistRepository.existsById(id)) {
+            throw new RuntimeException("Checklist item not found with ID: " + id);
+        }
+        userChecklistRepository.deleteById(id);
     }
 
 }
