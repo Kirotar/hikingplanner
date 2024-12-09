@@ -25,19 +25,19 @@ public class ChecklistController {
         return checklistService.getChecklistItems();
     }
     //Endpoint to allow users to select items for a specific hike
-    @PostMapping("/hike/{hikeId}/add-checklist")
+    @PostMapping("/{hikeId}/add-checklist")
     public ResponseEntity<List<UserChecklist>> addItemsToChecklist(@PathVariable Long hikeId, @RequestBody List<Long> itemIds) {
   return checklistService.addItemsToChecklist(hikeId, itemIds);
     }
     //Endpoint to fetch the user-specific checklist for a hike
-    @GetMapping("/hike/{hikeId}/checklist")
+    @GetMapping("/{hikeId}/checklist")
     public List<UserChecklist> getChecklistForHike(@PathVariable Long hikeId) {
         return checklistService.getChecklistForHike(hikeId);
     }
 
     //Endpoint to update the status of items in the checklist
-    @PutMapping("/hike/{hikeId}/checklist/{itemId}")
-    public ResponseEntity<UserChecklist> markItemAsCompleted(@PathVariable Long hikeId, @PathVariable Long itemId) {
-  return checklistService.markItemAsCompleted(hikeId, itemId);
+  @PatchMapping("/checklist/{id}")
+    public ResponseEntity<UserChecklist> markItemAsCompleted(@PathVariable Long id) {
+  return checklistService.markItemAsCompleted(id);
     }
 }

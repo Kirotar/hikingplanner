@@ -18,4 +18,6 @@ public class ChecklistItem {
 
     @Column(nullable = false)
     private String name;
+
+
 }

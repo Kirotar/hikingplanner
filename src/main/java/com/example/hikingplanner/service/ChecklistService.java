@@ -63,8 +63,8 @@ public class ChecklistService {
     }
 
 //Mark items in user chosen checklist as done
-    public ResponseEntity<UserChecklist> markItemAsCompleted(Long hikeId, Long itemId) {
-        Optional<UserChecklist> optionalEntry = userChecklistRepository.findByHikeIdAndChecklistItemId(hikeId, itemId);
+    public ResponseEntity<UserChecklist> markItemAsCompleted(Long id) {
+        Optional<UserChecklist> optionalEntry = userChecklistRepository.findById(id);
         /*Optional: container object that may or may not contain a non-null value. Optional is used to avoid
         NullPointerExceptions and to handle values that could be null in a more explicit and controlled way.*/
         if (optionalEntry.isPresent()) { //checks if the Optional contains a non-null UserChecklist object

@@ -12,7 +12,7 @@ public class WebConfig implements WebMvcConfigurer{
         // Allow CORS for frontend
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:3000") // Allow requests from this origin
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Allowed methods
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH") // Allowed methods
                 .allowedHeaders("*"); // Allow all headers
     }
 }
