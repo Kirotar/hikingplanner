@@ -17,5 +17,6 @@ public class HikeTemplates {
 
     private String name;
     private String distanceKm; //If we have extra time, lets make a calculator with start and end time    private String location;
+    private String location;
     private String detailsUrl;
 }

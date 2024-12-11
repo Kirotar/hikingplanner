@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/matk")
+@RequestMapping("api/trails")
 
 public class PastHikesController {
     private final PastHikeService pastHikeService;
@@ -16,6 +16,10 @@ public class PastHikesController {
         this.pastHikeService = hikingPlannerService;
     }
 
+//    @GetMapping("/get-trails")
+////    public List<HikeTemplates> getAllHikes() {
+////        return pastHikeService.getAllHikes();
+////    }
 /*    @PostMapping("/hike-dates/{startdate}/{enddate}")
     public List<String> validateDates(@PathVariable("startdate") String startdate,
                                          @PathVariable("enddate") String enddate) {
