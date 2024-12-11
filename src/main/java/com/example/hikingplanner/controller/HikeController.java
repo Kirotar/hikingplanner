@@ -3,7 +3,7 @@ package com.example.hikingplanner.controller;
 import com.example.hikingplanner.dto.HikeDTO;
 import com.example.hikingplanner.model.HikeTemplates;
 import com.example.hikingplanner.model.Hike;
-import com.example.hikingplanner.service.PlannedHikeService;
+import com.example.hikingplanner.service.HikeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,30 +12,30 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/matk")
-public class PlannedHikeController {
+public class HikeController {
 
-    private final PlannedHikeService plannedHikeService;
+    private final HikeService hikeService;
 
-    public PlannedHikeController(PlannedHikeService plannedHikeService) {this.plannedHikeService = plannedHikeService; }
+    public HikeController(HikeService hikeService) {this.hikeService = hikeService; }
 
     @GetMapping("/get-trails")
     public List<HikeTemplates> getAllHikes(){
-        return plannedHikeService.getAllHikeTemplates();
+        return hikeService.getAllHikeTemplates();
     }
 
     @GetMapping("/get-past-hikes")
     public List <Hike> getAllUserPastHikes(){
-                return plannedHikeService.getAllUserPastHikes();
+                return hikeService.getAllUserPastHikes();
     }
 
     @GetMapping("/get-future-hikes")
     public List <Hike> getAllUserFutureHikes(){
-        return plannedHikeService.getAllUserFutureHikes();
+        return hikeService.getAllUserFutureHikes();
     }
 
     @GetMapping("/get-trail/{name}")
     public ResponseEntity<HikeTemplates> getTrailByName(@PathVariable String name) {
-        HikeTemplates template = plannedHikeService.getTrailByName(name);
+        HikeTemplates template = hikeService.getTrailByName(name);
         if (template != null) {
             return ResponseEntity.ok(template); // class in Spring Framework used to represent the entire HTTP response
         } else {
@@ -45,13 +45,23 @@ public class PlannedHikeController {
 
     @PostMapping("/plan-hike")
     public Hike planHike(@RequestBody HikeDTO hikedto){
-        return plannedHikeService.planHike(hikedto);
+        return hikeService.planHike(hikedto);
     }
 
     @PutMapping("/{id}/complete")
     public ResponseEntity<Void> hikeIsCompleted(@PathVariable("id") Long id) {
-        plannedHikeService.hikeUpdate(id);
+        hikeService.hikeUpdate(id);
         return ResponseEntity.noContent().build(); // HTTP 204 No Content
+    }
+
+    @GetMapping("/distance-unlocked")
+    public String distanceCompletedUnlock(){
+       return hikeService.distanceCompletedUnlock();
+    }
+
+    @GetMapping("/distance-completed")
+    public Double distanceCompleted(){
+        return hikeService.distanceCompleted();
     }
 
 }

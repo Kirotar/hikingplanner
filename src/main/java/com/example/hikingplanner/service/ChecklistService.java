@@ -32,12 +32,17 @@ public class ChecklistService {
         this.userChecklistRepository = userChecklistRepository;
         this.hikeRepository = hikeRepository;
     }
-//Fetch all available checklist items
+
+    //Fetch all available checklist items
     public List<ChecklistItem> getChecklistItems() {
         return checklistItemRepository.findAll();
     }
+ /*   //Fetch user checklist items
+    public List<UserChecklist> getUserChecklist() {
+        return UserChecklistRepository.findAll();
+    }*/
 
-//User selects the items they want for their hike
+    //User selects the items they want for their hike
     public ResponseEntity<List<UserChecklist>> addItemsToChecklist(Long hikeId, List<Long> itemIds) {
         List<UserChecklist> userChecklist = new ArrayList<>();
         //Fetch the hike object:
@@ -58,12 +63,12 @@ public class ChecklistService {
         return ResponseEntity.ok(userChecklist); // Return the list of saved UserChecklist objects
     }
 
-//Fetch user chosen checklist
+    //Fetch user chosen checklist
     public List<UserChecklist> getChecklistForHike(Long hikeId) {
         return userChecklistRepository.findByHikeId(hikeId);
     }
 
-//Mark items in user chosen checklist as done
+    //Mark items in user chosen checklist as done
     public ResponseEntity<UserChecklist> markItemAsCompleted(Long id) {
         Optional<UserChecklist> optionalEntry = userChecklistRepository.findById(id);
         /*Optional: container object that may or may not contain a non-null value. Optional is used to avoid
@@ -97,5 +102,6 @@ public class ChecklistService {
         }
         userChecklistRepository.deleteById(id);
     }
+
 
 }

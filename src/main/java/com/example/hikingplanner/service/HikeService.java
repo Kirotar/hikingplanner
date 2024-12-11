@@ -6,31 +6,37 @@ import com.example.hikingplanner.model.HikeTemplates;
 import com.example.hikingplanner.repository.HikeRepository;
 import com.example.hikingplanner.repository.HikeTemplatesRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
+
 @Service
 @Transactional
-public class PlannedHikeService {
+public class HikeService {
 
+    @Autowired
     private final HikeTemplatesRepository hikeTemplatesRepository;
     private final HikeRepository hikeRepository;
 
-    public PlannedHikeService(HikeTemplatesRepository hikeTemplatesRepository, HikeRepository hikeRepository) {
+    public HikeService(HikeTemplatesRepository hikeTemplatesRepository, HikeRepository hikeRepository) {
         this.hikeTemplatesRepository = hikeTemplatesRepository;
         this.hikeRepository = hikeRepository;
     }
-//Get all hiking trails from the pre-made list
+
+    //Get all hiking trails from the pre-made list
     public List<HikeTemplates> getAllHikeTemplates() {
         return hikeTemplatesRepository.findAll();
     }
-//Get one hike by name
+
+    //Get one hike by name
     public HikeTemplates getTrailByName(String name) {
         return hikeTemplatesRepository.findByName(name);
     }
-//Add a hike to Hikes table
+
+    //Add a hike to Hikes table
     public Hike planHike(HikeDTO hikedto) {
         // Map HikeDTO to Hike entity
         Hike hike = new Hike();
@@ -45,7 +51,8 @@ public class PlannedHikeService {
         // Save the mapped entity
         return hikeRepository.save(hike);
     }
-//Get all the user inserted past hikes
+
+    //Get all the user inserted past hikes
     public List<Hike> getAllUserPastHikes() {
         // Get all hikes (you can replace this with the actual data fetching logic, e.g., from a repository)
         List<Hike> hikes = hikeRepository.findAll();
@@ -71,9 +78,30 @@ public class PlannedHikeService {
 //Update a user hike from uncompleted to completed
 
     public void hikeUpdate(Long id) {
-            Hike hike = hikeRepository.findById(id)
-                    .orElseThrow(() -> new RuntimeException("Hike not found"));
-            hike.setCompleted(true);
-            hikeRepository.save(hike);
+        Hike hike = hikeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Hike not found"));
+        hike.setCompleted(true);
+        hikeRepository.save(hike);
+    }
+
+
+    public Double distanceCompleted() {
+        return hikeRepository.getTotalHikedDistance();
+    }
+
+
+    public String distanceCompletedUnlock() {
+        Double distance = distanceCompleted(); // Call the non-static method
+
+        if (distance > 10000) {
+            return "tenthousand";
+        } else if (distance > 1000) {
+            return "thousand";
+        } else if (distance > 100) {
+            return "hundered";
         }
+        return "error";
+    }
+
 }
+
