@@ -1,4 +1,4 @@
-package com.example.hikingplanner.model.Achievements;
+package com.example.hikingplanner.model;
 
 import jakarta.persistence.*;
 import lombok.*;

@@ -9,15 +9,14 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-@Table(name = "checklist_items")
-public class ChecklistItem {
-
+@Table(name = "achievements")
+public class Achievements {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+
     private Long id;
 
     @Column(nullable = false)
-    private String name;
-
+    private String achievementName;
 
 }
