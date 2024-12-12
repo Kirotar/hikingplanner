@@ -25,6 +25,25 @@ public class AchievementsController {
         List<Achievements> achievements = achievementsService.getAllAchievements();
         return ResponseEntity.ok(achievements);
     }
+
+    // Salvesta saavutus koos seotud andmetega
+    @PostMapping("/save-achievement")
+    public ResponseEntity<Achievements> saveAchievementWithRelations(
+            @RequestBody Achievements achievement,
+            @RequestParam(required = false) String animalName,
+            @RequestParam(required = false) String hikeTypeName,
+            @RequestParam(required = false) String landmarkName,
+            @RequestParam(required = false) String activityName
+    ) {
+        try {
+            Achievements savedAchievement = achievementsService.saveAchievement(achievement, animalName, hikeTypeName, landmarkName, activityName);
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedAchievement);
+        } catch (Exception e) {
+            System.err.println("Viga saavutuse salvestamisel: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
     // Kõik loomad
     @GetMapping("/get-all-animals")
     public ResponseEntity<List<Animals>> getAllAnimals() {
@@ -36,10 +55,12 @@ public class AchievementsController {
     public List<UserAchievements> getAchievementsForHike(@PathVariable Long hikeId) {
         return achievementsService.getAchievementsForHike(hikeId);
     }
+
     @PostMapping("/{hikeId}/save-achievement")
     public ResponseEntity<List<UserAchievements>> saveAchievements(@PathVariable Long hikeId, @RequestBody List<Long> achievementIds) {
         return achievementsService.saveAchievements(hikeId, achievementIds);
     }
+
     @PostMapping("/{hikeId}/save-wildlife-sightings")
     public ResponseEntity<List<WildlifeSightings>> saveWildlifeSightings(
             @PathVariable Long hikeId,
@@ -48,29 +69,4 @@ public class AchievementsController {
         List<WildlifeSightings> sightings = achievementsService.saveWildlifeSightings(hikeId, animalType, birdType);
         return ResponseEntity.ok(sightings);
     }
-
-//    @GetMapping("/get-all-user-achievements")
-//    public ResponseEntity<List<Achievements>> getAllLandmarks() {
-//        return ResponseEntity.ok(achievementsService.getAllAchievements());
-//    }
-
-    // Salvesta saavutus koos seotud andmetega
-//    @PostMapping("/save-achievement")
-//    public ResponseEntity<Achievements> saveAchievementWithRelations(
-//            @RequestBody Achievements achievement,
-//            @RequestParam(required = false) String animalName,
-//            @RequestParam(required = false) String hikeTypeName,
-//            @RequestParam(required = false) String landmarkName,
-//            @RequestParam(required = false) String activityName
-//    ) {
-//        try {
-//            Achievements savedAchievement = achievementsService.saveAchievement(achievement, animalName, hikeTypeName, landmarkName, activityName);
-//            return ResponseEntity.status(HttpStatus.CREATED).body(savedAchievement);
-//        } catch (Exception e) {
-//            System.err.println("Viga saavutuse salvestamisel: " + e.getMessage());
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-//        }
-//    }
-
-
 }

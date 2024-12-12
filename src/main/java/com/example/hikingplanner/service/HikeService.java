@@ -5,8 +5,8 @@ import com.example.hikingplanner.model.Hike;
 import com.example.hikingplanner.model.HikeTemplates;
 import com.example.hikingplanner.repository.HikeRepository;
 import com.example.hikingplanner.repository.HikeTemplatesRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 @Transactional
 public class HikeService {
 
-    @Autowired
     private final HikeTemplatesRepository hikeTemplatesRepository;
     private final HikeRepository hikeRepository;
 
@@ -52,56 +51,62 @@ public class HikeService {
         return hikeRepository.save(hike);
     }
 
-    //Get all the user inserted past hikes
+    public void deleteHike(long id) {
+        if (hikeRepository.existsById(id)) {
+            hikeRepository.deleteById(id);
+        } else {
+            throw new EntityNotFoundException("Hike with id " + id + " not found");
+        }
+
+    }
+
     public List<Hike> getAllUserPastHikes() {
-        // Get all hikes (you can replace this with the actual data fetching logic, e.g., from a repository)
-        List<Hike> hikes = hikeRepository.findAll();
-
-        // Filter hikes by startDate being in the past or today
-        LocalDate currentDate = LocalDate.now();
-        return hikes.stream()
-                .filter(hike -> hike.getStartDate().isBefore(currentDate))
-                .collect(Collectors.toList());
+        markHikeComplete();
+        return hikeRepository.getPastHikes(LocalDate.now());
     }
 
-    //Get all the user inserted future hikes
     public List<Hike> getAllUserFutureHikes() {
-        // Get all hikes (you can replace this with the actual data fetching logic, e.g., from a repository)
-        List<Hike> hikes = hikeRepository.findAll();
-
-        // Filter hikes by startDate being in the past or today
-        LocalDate currentDate = LocalDate.now();
-        return hikes.stream()
-                .filter(hike -> hike.getStartDate().isAfter(currentDate) || hike.getStartDate().isEqual(currentDate))
-                .collect(Collectors.toList());
+        return hikeRepository.getFutureHikes(LocalDate.now());
     }
-//Update a user hike from uncompleted to completed
 
-    public void hikeUpdate(Long id) {
+    public void hikeUpdateCompletion(Long id) {
         Hike hike = hikeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Hike not found"));
         hike.setCompleted(true);
         hikeRepository.save(hike);
     }
-
-
+public void updateHike(Long id, Hike hike) {
+    for (Hike onehike : hikeRepository.findAll()) {
+        if (onehike.getId().equals(id)) {
+           onehike.setId(hike.getId());
+           onehike.setStartDate(hike.getStartDate());
+           onehike.setEndDate(hike.getEndDate());
+           onehike.setDuration(hike.getDuration());
+           onehike.setNotes(hike.getNotes());
+           onehike.setMeetupPoint(hike.getMeetupPoint());
+           hikeRepository.save(onehike);
+        }
+    }
+}
     public Double distanceCompleted() {
         return hikeRepository.getTotalHikedDistance();
     }
 
 
-    public String distanceCompletedUnlock() {
-        Double distance = distanceCompleted(); // Call the non-static method
-
-        if (distance > 10000) {
-            return "tenthousand";
-        } else if (distance > 1000) {
-            return "thousand";
-        } else if (distance > 100) {
-            return "hundered";
-        }
-        return "error";
+    public long totalNumberOfHikes() {
+        markHikeComplete();
+        long completedHikesCount = hikeRepository.countByIsCompletedTrue();
+        return completedHikesCount;
     }
 
+    public void markHikeComplete() {
+        LocalDate currentDate = LocalDate.now();
+        List<Hike> hikes = hikeRepository.findAll();
+        for (Hike hike : hikes)
+            if (hike.getStartDate().isBefore(currentDate) && !hike.isCompleted()) {
+                hike.setCompleted(true);
+                hikeRepository.save(hike); // Persist the change to the database
+            }
+    }
 }
 
