@@ -19,7 +19,7 @@ public class HikeDTO {
     private String notes;
     private LocalDate startDate; // Automatically parsed from ISO 8601 string
     private LocalDate endDate;
-    private LocalTime duration;
+    private String duration;
     private String meetupPoint;
     private boolean isCompleted;
 

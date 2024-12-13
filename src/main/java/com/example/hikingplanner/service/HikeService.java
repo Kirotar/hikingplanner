@@ -30,10 +30,6 @@ public class HikeService {
         return hikeTemplatesRepository.findAll();
     }
 
-    //Get one hike by name
-    public HikeTemplates getTrailByName(String name) {
-        return hikeTemplatesRepository.findByName(name);
-    }
 
     //Add a hike to Hikes table
     public Hike planHike(HikeDTO hikedto) {

@@ -2,10 +2,7 @@ package com.example.hikingplanner.controller;
 
 import com.example.hikingplanner.model.ChecklistItem;
 import com.example.hikingplanner.model.UserChecklist;
-import com.example.hikingplanner.repository.ChecklistItemRepository;
 import com.example.hikingplanner.service.ChecklistService;
-import jakarta.persistence.EntityNotFoundException;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

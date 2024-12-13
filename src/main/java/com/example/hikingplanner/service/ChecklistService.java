@@ -6,14 +6,11 @@ import com.example.hikingplanner.model.UserChecklist;
 import com.example.hikingplanner.repository.ChecklistItemRepository;
 import com.example.hikingplanner.repository.HikeRepository;
 import com.example.hikingplanner.repository.UserChecklistRepository;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,17 +76,6 @@ public class ChecklistService {
             //If the Optional is empty (i.e., the object isn't found), it returns a NOT_FOUND response with HTTP status 404.
 
         }
-
-
-        /*Without Optional:
-        UserChecklist entry = userChecklistRepository.findByHikeIdAndChecklistItemId(hikeId, itemId);
-        if (entry != null) {
-            entry.setIsCompleted(true); // Mark as completed
-            userChecklistRepository.save(entry);
-            return ResponseEntity.ok(entry);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }*/
     }
 
     public void deleteItem(Long id) {

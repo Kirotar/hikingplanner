@@ -35,15 +35,6 @@ public class HikeController {
         return hikeService.getAllUserFutureHikes();
     }
 
-    @GetMapping("/get-trail/{name}")
-    public ResponseEntity<HikeTemplates> getTrailByName(@PathVariable String name) {
-        HikeTemplates template = hikeService.getTrailByName(name);
-        if (template != null) {
-            return ResponseEntity.ok(template); // class in Spring Framework used to represent the entire HTTP response
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // Returns 404 if not found
-        }
-    }
 
     @PostMapping("/plan-hike")
     public Hike planHike(@RequestBody HikeDTO hikedto) {

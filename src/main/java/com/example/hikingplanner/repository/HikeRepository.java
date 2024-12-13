@@ -23,7 +23,6 @@ public interface HikeRepository extends JpaRepository<Hike, Long> {
     List<Hike> getFutureHikes(@Param("currentDate") LocalDate currentDate);
 
     long countByIsCompletedTrue();
-    long countByIsCompletedFalse();
 
 
 }

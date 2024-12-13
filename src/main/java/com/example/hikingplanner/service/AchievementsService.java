@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Transactional
@@ -33,18 +34,18 @@ public class AchievementsService {
         this.userAchievementsRepository = userAchievementsRepository;
     }
 
-// Kõik saavutused
-public List<Achievements> getAllAchievements() {
-    return achievementsRepository.findAll();
-}
+    // Kõik saavutused
+    public List<Achievements> getAllAchievements() {
+        return achievementsRepository.findAll();
+    }
 
-// Kõik loomad
-public List<Animals> getAllAnimals() {
-    return animalsRepository.findAll();
+    // Kõik loomad
+    public List<Animals> getAllAnimals() {
+        return animalsRepository.findAll();
 
-}
+    }
     //Fetch user chosen achievements
-public List<UserAchievements> getAchievementsForHike(Long hikeId) {
+    public List<UserAchievements> getAchievementsForHike(Long hikeId) {
         return userAchievementsRepository.findByHikeId(hikeId);
     }
 
@@ -75,28 +76,27 @@ public List<UserAchievements> getAchievementsForHike(Long hikeId) {
         Hike hike = hikeRepository.findById(hikeId)
                 .orElseThrow(() -> new RuntimeException("Hike not found"));
 
+        List<Long> validAnimalIds = animalIds != null ? animalIds : Collections.emptyList();
+        List<Long> validBirdIds = birdIds != null ? birdIds : Collections.emptyList();
+
         // Save animal sightings
-        if (animalIds != null) {
-            for (Long animalId : animalIds) {
-                Animals animal = animalsRepository.findById(animalId)
-                        .orElseThrow(() -> new RuntimeException("Animal not found"));
-                WildlifeSightings sighting = new WildlifeSightings();
-                sighting.setHike(hike);
-                sighting.setAnimalType(animal);
-                sightings.add(wildlifeSightingsRepository.save(sighting));
-            }
+        for (Long animalId : validAnimalIds) {
+            Animals animal = animalsRepository.findById(animalId)
+                    .orElseThrow(() -> new RuntimeException("Animal not found"));
+            WildlifeSightings sighting = new WildlifeSightings();
+            sighting.setHike(hike);
+            sighting.setAnimalType(animal);
+            sightings.add(wildlifeSightingsRepository.save(sighting));
         }
 
         // Save bird sightings
-        if (birdIds != null) {
-            for (Long birdId : birdIds) {
-                Animals bird = animalsRepository.findById(birdId)
-                        .orElseThrow(() -> new RuntimeException("Bird not found"));
-                WildlifeSightings sighting = new WildlifeSightings();
-                sighting.setHike(hike);
-                sighting.setBirdType(bird);
-                sightings.add(wildlifeSightingsRepository.save(sighting));
-            }
+        for (Long birdId : validBirdIds) {
+            Animals bird = animalsRepository.findById(birdId)
+                    .orElseThrow(() -> new RuntimeException("Bird not found"));
+            WildlifeSightings sighting = new WildlifeSightings();
+            sighting.setHike(hike);
+            sighting.setBirdType(bird);
+            sightings.add(wildlifeSightingsRepository.save(sighting));
         }
 
         return sightings;

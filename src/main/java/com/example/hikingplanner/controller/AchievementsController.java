@@ -5,9 +5,8 @@ import com.example.hikingplanner.service.AchievementsService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
 
 @RestController
 @RequestMapping("/api/matk")
@@ -24,24 +23,6 @@ public class AchievementsController {
     public ResponseEntity<List<Achievements>> getAllAchievements() {
         List<Achievements> achievements = achievementsService.getAllAchievements();
         return ResponseEntity.ok(achievements);
-    }
-
-    // Salvesta saavutus koos seotud andmetega
-    @PostMapping("/save-achievement")
-    public ResponseEntity<Achievements> saveAchievementWithRelations(
-            @RequestBody Achievements achievement,
-            @RequestParam(required = false) String animalName,
-            @RequestParam(required = false) String hikeTypeName,
-            @RequestParam(required = false) String landmarkName,
-            @RequestParam(required = false) String activityName
-    ) {
-        try {
-            Achievements savedAchievement = achievementsService.saveAchievement(achievement, animalName, hikeTypeName, landmarkName, activityName);
-            return ResponseEntity.status(HttpStatus.CREATED).body(savedAchievement);
-        } catch (Exception e) {
-            System.err.println("Viga saavutuse salvestamisel: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
     }
 
     // Kõik loomad
